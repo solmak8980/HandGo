@@ -41,7 +41,7 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="w-full h-full bg-white/80 text-black hidden md:block overflow-y-auto" >
+        <aside className="w-full h-full shadow bg-white/80 text-black hidden md:block overflow-y-auto" >
             <nav className="space-y-4 px-3 sm:px-4 py-5 h-full overflow-y-auto">
                 {links.map((group) => (
                     <div key={group.section}>
@@ -53,7 +53,7 @@ export default function Sidebar() {
                                         <>
                                             <button
                                                 onClick={() => toggleDropdown(item.label)}
-                                                className="flex w-full items-center justify-between px-2  sm:px-3.5 py-2 text-gray-800 hover:bg-gray-200 transition duration-200"
+                                                className="flex w-full rounded-lg items-center justify-between px-2  sm:px-3.5 py-2 text-gray-800 hover:bg-gray-200 transition duration-200"
                                             >
                                                 <div className="flex items-center gap-2 sm:gap-3">
                                                     <span className="text-base sm:text-base md:text-sm">{item.icon}</span>
@@ -72,7 +72,7 @@ export default function Sidebar() {
                                                             key={child.to}
                                                             to={child.to}
                                                             className={({ isActive }) =>
-                                                                `block  py-1.5 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                                `block px-2 py-1.5 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
                                                                     ? "bg-blue-400 text-white"
                                                                     : "text-gray-800 hover:bg-gray-200 hover:text-black"
                                                                 }`

@@ -12,6 +12,7 @@ import {
     FaChartPie,
 } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+import { Images } from "../../constants/image";
 
 const navSections = [
     {
@@ -46,19 +47,25 @@ export default function NavbarMobile() {
     };
 
     return (
-        <div className="md:hidden bg-white text-black px-4 py-3 relative shadow">
+        <div className="md:hidden bg-white text-black px-3 py-2 relative shadow">
             <div className="flex items-center justify-between">
-                <Link to="/" className="text-lg font-bold">HandGo</Link>
+                <Link to="/" className="flex items-center">
+                    <img
+                        src={Images.Logo}
+                        alt="Logo"
+                        className="w-28 md:w-36 h-auto object-contain"
+                    />
+                </Link>
                 <button onClick={() => setMenuOpen(!menuOpen)}>
                     <FaBars size={20} />
                 </button>
             </div>
 
             {menuOpen && (
-                <div className="absolute left-0 top-full w-full bg-black/80 text-white z-50 py-3 shadow-lg">
+                <div className="absolute left-0 top-full w-full bg-black/80 text-white z-50 py-3 shadow">
                     {navSections.map((section) => (
                         <div key={section.section} className="mb-3">
-                            <h3 className="text-sm font-semibold text-gray-300 px-4 uppercase">{section.section}</h3>
+                            <h3 className="text-xs font-bold text-gray-300 px-4 uppercase">{section.section}</h3>
                             <div className="mt-1 px-4">
                                 {section.items.map((item) => (
                                     <div key={item.label}>
