@@ -1,24 +1,24 @@
 import { FaUserCircle, FaSignOutAlt, FaCog, FaIdBadge } from "react-icons/fa";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <header className="bg-gray-800 text-white px-6 py-4 shadow-md flex items-center justify-between relative">
+        <header className="bg-white/80 text-black px-6 py-4 shadow-md flex items-center justify-between relative">
             <div className="text-2xl font-bold">
-                HandGo
+               <Link to={'/'}> HandGo</Link>
             </div>
 
-            <div className="w-1/3 max-w-md">
+            {/* <div className="w-1/3 max-w-md">
                 <input
                     type="text"
                     placeholder="Tìm kiếm..."
-                    className="w-full px-4  py-1 rounded-xl bg-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    className="w-full px-4  py-1 rounded-xl bg-gray-600 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
-            </div>
+            </div> */}
 
-            {/* Profile */}
             <div className="relative">
                 <button
                     onClick={() => setIsOpen(!isOpen)}

@@ -11,6 +11,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import RegisterPage from "../pages/auth/RegisterPage";
 
 
+
+
 const getLayoutComponent = (layout?: string | null) => {
     switch (layout) {
         case "main":
@@ -45,6 +47,7 @@ const generateRoutes = (routes: AppRoute[]) => {
         };
     });
 };
+
 
 export const appRoutes: AppRoute[] = [
     {

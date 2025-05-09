@@ -1,21 +1,36 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaInfoCircle, FaChevronDown, FaChevronRight } from "react-icons/fa";
+import {
+    FaBoxOpen, FaShoppingCart,
+    FaChartLine, FaChevronRight, FaChevronDown,
+    FaChartPie,
+    FaLayerGroup
+} from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
+
 
 const links = [
-    { to: "/", label: "Trang chủ", icon: <FaHome /> },
-    { to: "/df", label: "Trang chủ", icon: <FaHome /> },
-    { to: "/d", label: "Trang chủ", icon: <FaHome /> },
     {
-        label: "Giới thiệu",
-        icon: <FaInfoCircle />,
-        children: [
-            { to: "/about/company", label: "Công ty" },
-            { to: "/about/team", label: "Đội ngũ" },
+        section: "Overview",
+        items: [
+            { to: "/", label: "Dashboard", icon: <FaChartPie /> },
+            { to: "/dashboard", label: "Ecommerce Dashboard", icon: <FaChartLine /> },
         ],
     },
-    { to: "/about", label: "Trang chủ", icon: <FaHome /> },
-    { to: "/a", label: "Trang chủ", icon: <FaHome /> },
+    {
+        section: "Tasks",
+        items: [
+            {
+                to: "/seller/products", label: "Products", icon: <FaBoxOpen />, children: [
+                    { to: "/profile", label: "My Product" },
+                    { to: "/settings", label: "Edit history" },
+                ],
+            },
+            { to: "/seller/add", label: "Post products ", icon: <FaLayerGroup /> },
+            { to: "/seller/orders", label: "Order sold", icon: <FaShoppingCart /> },
+            { to: "/seller/orders", label: "Message", icon: <FaMessage /> },
+        ],
+    },
 ];
 
 export default function Sidebar() {
@@ -26,62 +41,69 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="w-full text-white hidden md:block h-full">
-            <nav className="">
-                {links.map((item) => (
-                    <div key={item.label}>
-                        {item.children ? (
-                            <>
-                                <button
-                                    onClick={() => toggleDropdown(item.label)}
-                                    className="flex w-full items-center justify-between px-4 py-3 text-gray-300 hover:bg-blue-600  transition"
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <span className="text-lg">{item.icon}</span>
-                                        <span>{item.label}</span>
-                                    </div>
-                                    {openDropdown === item.label ? (
-                                        <FaChevronDown className="text-sm" />
-                                    ) : (
-                                        <FaChevronRight className="text-sm" />
-                                    )}
-                                </button>
-                                {openDropdown === item.label && (
-                                    <div className="ml-10 mt-1 space-y-1">
-                                        {item.children.map((child) => (
-                                            <NavLink
-                                                key={child.to}
-                                                to={child.to}
-                                                className={({ isActive }) =>
-                                                    `block text-sm px-2 py-2  transition ${isActive
-                                                        ? "bg-blue-500 text-white"
-                                                        : "text-gray-100 hover:text-white hover:bg-blue-600"
-                                                    }`
-                                                }
+        <aside className="w-full h-full bg-white/80 text-black hidden md:block overflow-y-auto" >
+            <nav className="space-y-4 px-3 sm:px-4 py-5 h-full overflow-y-auto">
+                {links.map((group) => (
+                    <div key={group.section}>
+                        <h2 className="text-sm font-bold text-gray-400 mb-2 uppercase">{group.section}</h2>
+                        <div className="space-y-1">
+                            {group.items.map((item) => (
+                                <div key={item.label}>
+                                    {item.children ? (
+                                        <>
+                                            <button
+                                                onClick={() => toggleDropdown(item.label)}
+                                                className="flex w-full items-center justify-between px-2  sm:px-3.5 py-2 text-gray-800 hover:bg-gray-200 transition duration-200"
                                             >
-                                                {child.label}
-                                            </NavLink>
-                                        ))}
-                                    </div>
-                                )}
-                            </>
-                        ) : (
-                            <NavLink
-                                to={item.to}
-                                className={({ isActive }) =>
-                                    `flex items-center gap-3 px-4 py-3  transition ${isActive
-                                        ? "bg-blue-600 text-white font-semibold"
-                                        : "text-gray-100 hover:bg-blue-500 hover:text-white"
-                                    }`
-                                }
-                            >
-                                <span className="text-lg">{item.icon}</span>
-                                <span>{item.label}</span>
-                            </NavLink>
-                        )}
+                                                <div className="flex items-center gap-2 sm:gap-3">
+                                                    <span className="text-base sm:text-base md:text-sm">{item.icon}</span>
+                                                    <span className="text-sm 2xl:text-sm md:text-sm font-bold">{item.label}</span>
+                                                </div>
+                                                {openDropdown === item.label ? (
+                                                    <FaChevronDown className="text-xs sm:text-sm" />
+                                                ) : (
+                                                    <FaChevronRight className="text-xs sm:text-sm" />
+                                                )}
+                                            </button>
+                                            {openDropdown === item.label && (
+                                                <div className="ml-6 sm:ml-10 mt-1 space-y-1">
+                                                    {item.children.map((child) => (
+                                                        <NavLink
+                                                            key={child.to}
+                                                            to={child.to}
+                                                            className={({ isActive }) =>
+                                                                `block  py-1.5 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                                    ? "bg-blue-400 text-white"
+                                                                    : "text-gray-800 hover:bg-gray-200 hover:text-black"
+                                                                }`
+                                                            }
+                                                        >
+                                                            {child.label}
+                                                        </NavLink>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <NavLink
+                                            to={item.to}
+                                            className={({ isActive }) =>
+                                                `flex items-center gap-3  px-3 sm:px-3.5 py-2 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                    ? "bg-blue-500 text-white"
+                                                    : "text-gray-800 hover:bg-gray-200 hover:text-black"
+                                                }`
+                                            }
+                                        >
+                                            <span className="text-sm sm:text-base md:text-sm">{item.icon}</span>
+                                            <span>{item.label}</span>
+                                        </NavLink>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 ))}
             </nav>
-        </aside>
+        </aside >
     );
 }

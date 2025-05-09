@@ -11,8 +11,7 @@ const AdminLayout = () => {
                     <Link to="/admin/users" className="block hover:text-yellow-300">Người dùng</Link>
                 </nav>
             </aside>
-
-            {/* Content */}
+            
             <main className="flex-1 bg-gray-100 p-6">
                 <Outlet />
             </main>
