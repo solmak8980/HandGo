@@ -2,13 +2,15 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import type { AppRoute } from "../types/route";
 import NotFoundPage from "../pages/NotFoundPage";
-import HomePage from "../pages/HomePage";
-import AboutPage from "../pages/AboutPage";
 import LoginPage from "../pages/auth/LoginPage";
 import DashBoardPage from "../pages/admin/DashboardPages";
 import AuthLayout from "../layouts/AuthLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import RegisterPage from "../pages/auth/RegisterPage";
+import EDashboardPage from "../pages/seller/EDashboardPage";
+import { FaChartPie, FaChartLine, FaBoxOpen, FaLayerGroup, FaShoppingCart } from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
+import AboutPage from "../pages/AboutPage";
 
 
 
@@ -54,8 +56,70 @@ export const appRoutes: AppRoute[] = [
         path: "/",
         layout: "main",
         children: [
-            { path: "/", element: <HomePage />, title: "Trang chủ" },
-            { path: "/about", element: <AboutPage />, title: "Giới thiệu" },
+            {
+                path: "/",
+                element: <DashBoardPage />,
+                title: "Dashboard",
+                icon: <FaChartPie />,
+                section: "Overview",
+                role: "seller",
+            },
+            {
+                path: "/ecommerce",
+                element: <EDashboardPage />,
+                title: "Ecommerce Dashboard",
+                icon: <FaChartLine />,
+                section: "Overview",
+                role: "seller",
+            },
+            {
+                path: "/seller/products",
+                element: <AboutPage />,
+                title: "Products",
+                icon: <FaBoxOpen />,
+                section: "Tasks",
+                role: "seller",
+                children: [
+                    {
+                        path: "/seller/products/history",
+                        element: <AboutPage />,
+                        title: "Edit History",
+                        section: "Tasks",
+                        role: "seller",
+                    },
+                    {
+                        path: "/seller/products/es",
+                        element: <AboutPage />,
+                        title: "Edit History",
+                        section: "Tasks",
+                        role: "seller",
+                    },
+                ]
+            },
+            {
+                path: "/seller/add",
+                element: <AboutPage />,
+                title: "Post Products",
+                icon: <FaLayerGroup />,
+                section: "Tasks",
+                role: "seller",
+            },
+            {
+                path: "/seller/orders",
+                element: <AboutPage />,
+                title: "Order Sold",
+                icon: <FaShoppingCart />,
+                section: "Tasks",
+                role: "seller",
+            },
+            {
+                path: "/seller/messages",
+                element: <AboutPage />,
+                title: "Message",
+                icon: <FaMessage />,
+                section: "Tasks",
+                role: "seller",
+            },
         ],
     },
     {

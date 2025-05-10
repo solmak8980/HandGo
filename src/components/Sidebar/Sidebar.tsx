@@ -1,59 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import {
-    FaBoxOpen, FaShoppingCart,
-    FaChartLine, FaChevronRight, FaChevronDown,
-    FaChartPie,
-    FaLayerGroup
-} from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
+import type { AppRoute } from "../../types/route";
+import { appRoutes } from "../../routes";
+import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
+const generateLinksFromRoutes = (routes: AppRoute[]) => {
+    const linksMap: { [section: string]: any[] } = {};
 
-const links = [
-    {
-        section: "Overview",
-        items: [
-            { to: "/", label: "Dashboard", icon: <FaChartPie /> },
-            { to: "/dashboard", label: "Ecommerce Dashboard", icon: <FaChartLine /> },
-        ],
-    },
-    {
-        section: "Tasks",
-        items: [
-            {
-                to: "/seller/products", label: "Products", icon: <FaBoxOpen />, children: [
-                    { to: "/profile", label: "My Product" },
-                    { to: "/settings", label: "Edit history" },
-                ],
-            },
-            { to: "/seller/add", label: "Post products ", icon: <FaLayerGroup /> },
-            { to: "/seller/orders", label: "Order sold", icon: <FaShoppingCart /> },
-            { to: "/seller/orders", label: "Message", icon: <FaMessage /> },
-        ],
-    },
-];
+    routes.forEach((route) => {
+        if (route.layout === "main") {
+            route.children?.forEach((child) => {
+                if (!child.title || !child.section) return;
+
+                const section = child.section;
+
+                const item = {
+                    to: child.path,
+                    label: child.title,
+                    icon: child.icon,
+                    children: child.children,
+                };
+
+                linksMap[section] = linksMap[section] || [];
+                linksMap[section].push(item);
+            });
+        }
+    });
+
+    return Object.entries(linksMap).map(([section, items]) => ({
+        section,
+        items,
+    }));
+};
 
 export default function Sidebar() {
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [generatedLinks, setGeneratedLinks] = useState<any[]>([]);
 
     const toggleDropdown = (label: string) => {
         setOpenDropdown(openDropdown === label ? null : label);
     };
 
+    useEffect(() => {
+        const generatedLinks = generateLinksFromRoutes(appRoutes);
+        setGeneratedLinks(generatedLinks); 
+        // console.log(generatedLinks);
+    }, []);
+
     return (
-        <aside className="w-full h-full shadow bg-white/80 text-black hidden md:block overflow-y-auto" >
+        <aside className="w-full h-full bg-white/80 text-black hidden md:block overflow-y-auto">
             <nav className="space-y-4 px-3 sm:px-4 py-5 h-full overflow-y-auto">
-                {links.map((group) => (
+                {generatedLinks.map((group) => (
                     <div key={group.section}>
                         <h2 className="text-sm font-bold text-gray-400 mb-2 uppercase">{group.section}</h2>
                         <div className="space-y-1">
-                            {group.items.map((item) => (
+                            {group.items.map((item: any) => (
                                 <div key={item.label}>
                                     {item.children ? (
                                         <>
                                             <button
                                                 onClick={() => toggleDropdown(item.label)}
-                                                className="flex w-full rounded-lg items-center justify-between px-2  sm:px-3.5 py-2 text-gray-800 hover:bg-gray-200 transition duration-200"
+                                                className="flex w-full items-center justify-between px-2 sm:px-3.5 py-2 text-gray-800 hover:bg-gray-200 transition duration-200"
                                             >
                                                 <div className="flex items-center gap-2 sm:gap-3">
                                                     <span className="text-base sm:text-base md:text-sm">{item.icon}</span>
@@ -67,18 +74,18 @@ export default function Sidebar() {
                                             </button>
                                             {openDropdown === item.label && (
                                                 <div className="ml-6 sm:ml-10 mt-1 space-y-1">
-                                                    {item.children.map((child) => (
+                                                    {item.children.map((child: any) => (
                                                         <NavLink
-                                                            key={child.to}
-                                                            to={child.to}
+                                                            key={child.path}
+                                                            to={child.path}
                                                             className={({ isActive }) =>
-                                                                `block px-2 py-1.5 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                                `block py-1.5 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
                                                                     ? "bg-blue-400 text-white"
                                                                     : "text-gray-800 hover:bg-gray-200 hover:text-black"
                                                                 }`
                                                             }
                                                         >
-                                                            {child.label}
+                                                            {child.title}
                                                         </NavLink>
                                                     ))}
                                                 </div>
@@ -88,7 +95,7 @@ export default function Sidebar() {
                                         <NavLink
                                             to={item.to}
                                             className={({ isActive }) =>
-                                                `flex items-center gap-3  px-3 sm:px-3.5 py-2 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                `flex items-center gap-3 px-3 sm:px-3.5 py-2 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
                                                     ? "bg-blue-500 text-white"
                                                     : "text-gray-800 hover:bg-gray-200 hover:text-black"
                                                 }`
@@ -104,6 +111,6 @@ export default function Sidebar() {
                     </div>
                 ))}
             </nav>
-        </aside >
+        </aside>
     );
 }

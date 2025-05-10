@@ -36,7 +36,7 @@ export default function Header() {
                         className="flex items-center gap-2 focus:outline-none hover:text-gray-600 transition"
                     >
                         <FaUserCircle size={26} />
-                        <span className="hidden md:inline">Tài khoản</span>
+                        <span className="hidden md:inline font-bold">User</span>
                         {isOpen ? (
                             <FaChevronLeft className="text-sm" />
                         ) : (
