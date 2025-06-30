@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Images } from "../../constants/image";
 import type { AppRoute } from "../../types/route";
-import { FaBars, FaChevronDown, FaChevronRight } from "react-icons/fa";
+import { FaBars, FaChevronDown, FaChevronRight, FaTimes } from "react-icons/fa";
 import { appRoutes } from "../../routes";
+import { NavLink } from "react-router-dom";
 
 const generateLinksFromRoutes = (routes: AppRoute[]) => {
     const linksMap: { [section: string]: any[] } = {};
@@ -59,9 +60,14 @@ export default function NavbarMobile() {
                         className="w-28 md:w-36 h-auto object-contain"
                     />
                 </Link>
-                <button onClick={() => setMenuOpen(!menuOpen)}>
-                    <FaBars size={20} />
+                <button
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className={`p-2 rounded transition ${menuOpen ? "bg-gray-50 text-red-600 rounded-2xl" : "hover:bg-gray-100"
+                        }`}
+                >
+                    {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
                 </button>
+
             </div>
 
             {menuOpen && (
@@ -91,27 +97,35 @@ export default function NavbarMobile() {
                                                 {openDropdown === item.label && (
                                                     <div className="pl-10 py-1 space-y-1">
                                                         {item.children.map((child: any) => (
-                                                            <Link
-                                                                key={child.path}
-                                                                to={child.path}
-                                                                className="block py-1 text-sm hover:text-blue-600"
-                                                                onClick={() => setMenuOpen(false)}
+                                                            <NavLink
+                                                                to={child.path || "/"}
+                                                                className={({ isActive }) =>
+                                                                    `flex items-center gap-3 px-3 sm:px-3.5 py-2 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                                        ? "bg-blue-500 text-white"
+                                                                        : "text-gray-800 hover:bg-gray-200 hover:text-black"
+                                                                    }`
+                                                                }
                                                             >
-                                                                {child.title}
-                                                            </Link>
+                                                                <span className="text-sm sm:text-base md:text-sm">{child.icon}</span>
+                                                                <span>{child.title}</span>
+                                                            </NavLink>
                                                         ))}
                                                     </div>
                                                 )}
                                             </>
                                         ) : (
-                                            <Link
-                                                to={item.to}
-                                                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-200"
-                                                onClick={() => setMenuOpen(false)}
+                                            <NavLink
+                                                to={item.to || "/"}
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-3 px-3 sm:px-3.5 py-2 rounded-lg transition duration-200 text-xs sm:text-sm md:text-sm font-bold ${isActive
+                                                        ? "bg-blue-500 text-white"
+                                                        : "text-white hover:bg-gray-200 hover:text-black"
+                                                    }`
+                                                }
                                             >
-                                                <span>{item.icon}</span>
+                                                <span className="text-sm sm:text-base md:text-sm">{item.icon}</span>
                                                 <span>{item.label}</span>
-                                            </Link>
+                                            </NavLink>
                                         )}
                                     </div>
                                 ))}

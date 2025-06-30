@@ -10,7 +10,9 @@ export interface AppRoute {
   icon?: ReactElement;
   role?: "admin" | "seller";
   section?: string;
+  secondary?: boolean;
 }
+
 
 export interface GroupedLinks {
   [section: string]: AppRoute[];

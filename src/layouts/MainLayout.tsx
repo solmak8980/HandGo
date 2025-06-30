@@ -24,7 +24,9 @@ export default function MainLayout() {
                     className={`flex-1 overflow-auto p-6 transition-all duration-300 ${!isMobile ? 'ml-64' : ''
                         } bg-gray-200 min-h-[calc(100vh-4rem)]`}
                 >
-                    <Outlet />
+                    <div className="pt-2">
+                        <Outlet />
+                    </div>
                 </main>
             </div>
         </div>

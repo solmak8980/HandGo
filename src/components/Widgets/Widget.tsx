@@ -8,7 +8,7 @@ export default function Widget({ title, value, icon, bgColor = "bg-blue-500" }: 
                 {icon}
             </div>
             <div>
-                <h3 className="text-sm text-gray-500">{title}</h3>
+                <h3 className="text-base font-medium text-gray-500">{title}</h3>
                 <p className="text-xl font-semibold text-gray-800">{value}</p>
             </div>
         </div>

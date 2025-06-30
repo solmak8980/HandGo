@@ -12,9 +12,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function PieChart({ data }: PieChartProps) {
     const options = {
         responsive: true,
+         maintainAspectRatio: false, 
         plugins: {
             legend: {
-                position: "right" as const,
+                position: "top" as const,
             },
             tooltip: {
                 enabled: true,
