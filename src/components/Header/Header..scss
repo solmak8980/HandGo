@@ -1,0 +1,15 @@
+.custom-dropdown-wrapper .ant-dropdown-menu {
+  padding: 8px 10px;
+  border-radius: 0px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.custom-dropdown-wrapper .ant-dropdown-menu-item {
+  padding: 8px 12px !important;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.custom-dropdown-wrapper .ant-dropdown-menu-item:hover {
+  background-color: #1604e2d7;
+}

@@ -8,7 +8,7 @@ export default function AuthLayout() {
             style={{ backgroundImage: `url(${Images.BgAuth})` }}
         >
             <div className="w-full max-w-md">
-                <div className="flex bg-black/40 rounded-t-xl border-b-0 shadow-md backdrop-blur-md overflow-hidden">
+                <div className="flex bg-black/60 rounded-t-xl border-b-0 shadow-md backdrop-blur-md overflow-hidden">
                     <NavLink
                         to="/auth/login"
                         className={({ isActive }) =>
@@ -32,7 +32,7 @@ export default function AuthLayout() {
                         Đăng ký
                     </NavLink>
                 </div>
-                <div className="w-full rounded-b-xl border-t-0  overflow-hidden shadow-2xl backdrop-blur-md bg-black/40 p-8">
+                <div className="w-full rounded-b-xl border-t-0  overflow-hidden shadow-2xl backdrop-blur-md bg-black/60 p-8">
                     <Outlet />
                 </div>
             </div>

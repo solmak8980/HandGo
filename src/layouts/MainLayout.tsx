@@ -8,21 +8,28 @@ export default function MainLayout() {
     const isMobile = useMediaQuery({ maxWidth: 760 });
 
     return (
-        <div className="min-h-screen flex flex-col overflow-y-auto">
-            {!isMobile && <Header />}
-            {isMobile && <Navbar />}
+        <div className="min-h-screen flex flex-col">
+            <div className="fixed top-0 left-0 right-0 z-50">
+                {!isMobile ? <Header /> : <Navbar />}
+            </div>
 
-            <div className="flex flex-1 w-full ">
+            <div className="flex flex-1 pt-16">
                 {!isMobile && (
-                    <aside className="max-w-1/5 bg-white/80 text-black ">
+                    <aside className="w-64 fixed top-16 bottom-0 left-0 z-40 bg-white shadow">
                         <Sidebar />
                     </aside>
                 )}
 
-                <main className="flex-1 w-full p-6 bg-gray-200 bg-opacity-60 dark:bg-navy-900 overflow-auto">
-                    <Outlet />
+                <main
+                    className={`flex-1 overflow-auto p-6 transition-all duration-300 ${!isMobile ? 'ml-64' : ''
+                        } bg-gray-200 min-h-[calc(100vh-4rem)]`}
+                >
+                    <div className="pt-2">
+                        <Outlet />
+                    </div>
                 </main>
             </div>
         </div>
     );
 }
+
